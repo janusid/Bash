@@ -1,0 +1,22 @@
+#!/bin/bash
+
+DATETIME=$(date +"%Y%m%d-%H%M%S")
+SVN_REPOSITORIES_ROOT_DIR="/var/lib/svn/repos/"
+BACKUP_DIRECTORY="/backup/svn"
+NAS_DIRECTORY="/mnt/nas/"
+
+for REPOSITORY in `ls -1 $SVN_REPOSITORIES_ROOT_DIR`
+do
+        echo 'dumping repository: ' $REPOSITORY
+        /usr/bin/svnadmin dump $SVN_REPOSITORIES_ROOT_DIR$REPOSITORY | gzip -9 > $BACKUP_DIRECTORY/SVN_BACKUP_$DATETIME'.gz'
+
+done
+
+echo "Move Repo Backup to NAS"
+mv $BACKUP_DIRECTORY/SVN_BACKUP_* $NAS_DIRECTORY
+
+cd $NAS_DIRECTORY
+echo "Delete backup older than 5 days"
+find . -type f -mtime +4 -delete
+
+exit 0
