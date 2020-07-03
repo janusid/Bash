@@ -1,0 +1,3 @@
+/dev/sdb1       /backup/svn     ext4    defaults 0 0
+
+//NAS_IP/RND/svn /mnt/nas cifs rw,user,username=nasuser,password=naspass,uid=1000,gid=1000,iocharset=utf8 0 0
