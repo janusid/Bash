@@ -1,0 +1,8 @@
+#!/bin/bash
+
+st="`date  +"%D %H:%M:%S"`"
+LOGFILE=/var/log/yourlogfile.log
+
+./script.sh | { while read R; do echo "[$st] eps_etlconfig: $R"; done } >> $LOGFILE
+
+exit 0
